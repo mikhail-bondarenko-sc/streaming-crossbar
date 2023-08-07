@@ -38,7 +38,8 @@ module schedule
                 .s_last_i(last_mask[i*S_DATA_COUNT +: S_DATA_COUNT]),
                 .grant_o(grant_o[i * S_DATA_COUNT +: S_DATA_COUNT]), 
                 .m_last_o(m_last_o[i]), 
-                .m_id_o(m_id_o[i * T_ID___WIDTH +: T_ID___WIDTH]), 
+                .m_id_o(m_id_o[i * T_ID___WIDTH +: T_ID___WIDTH]), // [Synth 8-2908] range width must be a positive integer
+                                                                   // в граничные моменты (например кроссбар 1 мастер на несколько слейвов или наоборот несколько слейвов в 1 мастер индекс выходит за границы массива
                 .m_valid_o(m_valid_o[i])
             );
         end
@@ -66,6 +67,7 @@ module schedule
         end
     end
 
-    assign s_ready_o = s_valid_i;
+    assign s_ready_o = s_valid_i; // s_ready_o может ли подняться, когда нет готовности со стороны m?
+                                  // m_ready не учитывается, можем потерять пакет?
 
 endmodule

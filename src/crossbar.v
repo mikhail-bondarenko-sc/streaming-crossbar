@@ -22,7 +22,7 @@ module crossbar
         if(rst) begin
             for (i = 0; i < S_DATA_COUNT; i = i + 1) begin
                 for (j = 0; j < M_DATA_COUNT; j = j + 1) begin
-                     m_data_o[j * T_DATA_WIDTH +: T_DATA_WIDTH] = 0;
+                     m_data_o[j * T_DATA_WIDTH +: T_DATA_WIDTH] = 0; // почему в двойном for не используется i?
                 end
             end
         end else begin    
